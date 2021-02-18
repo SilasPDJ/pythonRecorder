@@ -1,0 +1,26 @@
+2021-02-18 01:49:59,822: Mouse clicked at (1401, 420) with Button.left
+2021-02-18 01:50:00,350: Mouse clicked at (1432, 433) with Button.left
+2021-02-18 01:50:01,231: Mouse clicked at (1388, 520) with Button.left
+2021-02-18 01:50:13,650: Mouse clicked at (1478, 635) with Button.left
+2021-02-18 01:50:14,469: 'a'
+2021-02-18 01:50:15,381: 'b'
+2021-02-18 01:50:15,756: 'c'
+2021-02-18 01:50:16,588: 'd'
+2021-02-18 01:50:17,508: 'e'
+2021-02-18 01:50:17,932: 'f'
+2021-02-18 01:50:24,459: Mouse clicked at (1563, 655) with Button.left
+2021-02-18 01:50:25,451: Mouse clicked at (1574, 591) with Button.left
+2021-02-18 01:50:26,412: Key.enter
+2021-02-18 01:50:27,894: Mouse clicked at (1385, 520) with Button.left
+2021-02-18 13:04:46,817: Mouse scrolled at (216, 96)(0, -1)
+2021-02-18 13:04:46,897: Mouse scrolled at (216, 96)(0, -1)
+2021-02-18 13:04:47,029: Mouse clicked at (216, 96) with Button.right
+2021-02-18 13:04:48,517: Mouse clicked at (1378, 521) with Button.left
+2021-02-18 13:57:03,032: Mouse clicked at (1391, 518) with Button.left
+2021-02-18 14:07:27,763: Mouse clicked at (956, 521) with Button.left
+2021-02-18 14:07:29,374: Mouse clicked at (863, 356) with Button.left
+2021-02-18 14:07:30,020: Key.ctrl_l
+2021-02-18 14:07:30,028: Key.shift
+2021-02-18 14:07:30,516: Key.f10
+2021-02-18 14:07:33,390: Mouse clicked at (1476, 428) with Button.left
+2021-02-18 14:07:34,319: Mouse clicked at (1377, 515) with Button.left
