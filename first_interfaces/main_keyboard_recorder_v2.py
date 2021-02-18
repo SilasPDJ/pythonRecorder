@@ -2,8 +2,11 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from os import path
 import pickle
-from utls import MyKeyboard
+from utils import MyKeyboardV001
 import time
+import threading
+from functools import partial
+
 
 class Application(tk.Frame):
 
@@ -13,24 +16,33 @@ class Application(tk.Frame):
 
     def __init__(self, master=None):
         super().__init__(master)
-
         self.master = master
         bt = self.MyButton(fg='red', bg='yellow')
         bt["text"] = 'Selecione arquivo'
-        bt["command"] = self.selec_arq
+        bt["command"] = lambda: self.start(self.selec_arq)
         bt.pack(side="top")
 
         bt = self.MyButton(fg='black', bg='red')
         bt["text"] = 'GRAVAR'
-        bt["command"] = self.gravando
+        bt["command"] = lambda: self.start(self.gravando)
         bt.pack(side="top")
         # self.create_widgets()
 
         bt = self.MyButton(fg='black', bg='green')
         bt["text"] = 'REPRODUZIR'
-        bt["command"] = self.executa
+        bt["command"] = lambda: self.start(self.executa)
         bt.pack(side="top")
         # self.create_widgets()
+
+    # threads
+    def refresh(self):
+        self.master.update()
+        self.master.after(1000, self.refresh)
+
+    def start(self, target):
+        self.refresh()
+        threading.Thread(target=target).start()
+    # #######
 
     def selec_arq(self):
         fld = filedialog.askopenfilename(defaultextension='txt', filetypes=(('text files', 'txt'), ), initialdir=path.dirname(__file__))
@@ -42,8 +54,6 @@ class Application(tk.Frame):
 
         fld = f'{fld0}.txt' if path.splitext(fld0)[1] == '' else fld0
         self.mk_fld(fld)
-        fld_resume = fld.replace(fld[3:len(fld) - int(len(fld)/2)], '...')
-        self.mk_fld(fld_resume)
         return fld
 
     def mk_fld(self, fld):
@@ -54,7 +64,8 @@ class Application(tk.Frame):
         if fld == '':
             fld = str(time.time()).replace('.', '')
             fld += '.txt'
-        self.arq0atual_label = tk.Label(text=f"arquivo atual: {fld}")
+        fld_resume = fld.replace(fld[3:len(fld) - int(len(fld)/2)], '...')
+        self.arq0atual_label = tk.Label(text=f"arquivo atual: {fld_resume}")
         self.arq0atual_label.pack()
         self.arq0atual = fld
 
@@ -66,7 +77,8 @@ class Application(tk.Frame):
                 narq = self.selec_arq()
             else:
                 narq = self.cria_arq()
-        dale = MyKeyboard(narq)
+        print('narq: ')
+        dale = MyKeyboardV001(narq)
         return dale
 
     def gravando(self):

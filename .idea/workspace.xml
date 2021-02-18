@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a00d6ffd-b5d3-4da9-b4a1-e05a1f47802c" name="Default Changelist" comment="" />
+    <list default="true" id="a00d6ffd-b5d3-4da9-b4a1-e05a1f47802c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zmain_interfaces/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LAMBDAvsPARTIAL.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/arquivo_atualdas22e05.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_somente_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_keyboard_recorder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_keyboard_recorder_v2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_teclado.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_teclado_v2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_teclado_v3_pausebreak.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_teclado_v3_quero.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_teclado_v4_dump_quero.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/naoestouparabrincadeira.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/narq.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os_dois_juntos.py" beforeDir="false" afterPath="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testesavedale.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utls/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +47,9 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1oMHsaUq7hmw51XStIYYiSiqa3a" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,29 +64,11 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="H:\MY_PROJECTS\pythonRecorder" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\MY_PROJECTS\pythonRecorder\main" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.os_dois_juntos">
-    <configuration name="LAMBDAvsPARTIAL" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pythonRecorder" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="H:\MY_PROJECTS\pythonRecorder\LAMBDAvsPARTIAL.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.__init__">
     <configuration name="OS_DOIS_JUNTOS_FINAL" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonRecorder" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -85,7 +90,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_keyboard_recorder" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonRecorder" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -93,11 +98,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/zmain_interfaces" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_keyboard_recorder.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zmain_interfaces/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -106,7 +111,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_keyboard_recorder_v2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_keyboard_recorder_v2 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonRecorder" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -114,11 +119,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/first_interfaces" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_keyboard_recorder_v2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/first_interfaces/main_keyboard_recorder_v2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -160,7 +165,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/os_dois_juntos.py" />
+      <option name="SCRIPT_NAME" value="H:\MY_PROJECTS\pythonRecorder\main\os_dois_juntos.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythonRecorder" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -171,11 +197,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.__init__" />
+        <item itemvalue="Python.main_keyboard_recorder_v2 (1)" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.os_dois_juntos" />
         <item itemvalue="Python.OS_DOIS_JUNTOS_FINAL" />
-        <item itemvalue="Python.main_keyboard_recorder_v2" />
-        <item itemvalue="Python.LAMBDAvsPARTIAL" />
-        <item itemvalue="Python.main_keyboard_recorder" />
       </list>
     </recent_temporary>
   </component>
@@ -200,5 +226,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

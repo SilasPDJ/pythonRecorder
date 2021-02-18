@@ -3,11 +3,13 @@ import pynput
 import time
 import pickle
 
+print('Precione pause_break para pausar')
 
 class MyKeyboard:
     file = 'testsave.txt'
 
     controller = Controller()
+    geral = []
     live_time_program = time.time()
 
     start = time.time()
@@ -17,10 +19,6 @@ class MyKeyboard:
 
     prossegue = True
     # Detecta key.pause [se foi pressionada]
-
-    def __init__(self, file):
-        self.file = file
-        self.geral = []
 
     def on_press(self, key):
 
@@ -52,7 +50,6 @@ class MyKeyboard:
             self.geral.append(appended)
             print(appended['time_taken'])
 
-
     def get_time_taken(self):
         end = time.time()
         self.ss_count = False
@@ -81,6 +78,11 @@ class MyKeyboard:
     def backup(self):
         with open(self.file, 'wb') as wf:
             novo = self.geral.copy()
+
+            for e, dictt in enumerate(novo):
+                for k, v in dictt.items():
+                    pass
+                    # novo[e][k] = str(novo[e][k])
             pickle.dump(novo, wf)
 
     def playitbackup(self):
@@ -99,10 +101,9 @@ class MyKeyboard:
                 self.controller.press(tecla)
             # """
 
-"""
+
 dale = MyKeyboard()
 dale.listen()
 dale.backup()
 # dale.playit()
 dale.playitbackup()
-"""
