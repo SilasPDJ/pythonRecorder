@@ -79,10 +79,7 @@ class Application(tk.Frame):
         return dale
 
     def mk_fld(self, fld=None):
-        try:
-            self.arq0atual_label.pack_forget()
-        except (AttributeError, NameError):
-            pass
+        self.start(self.forget_arq0)
         if fld == '' or fld is None:
             fld = str(time.time()).replace('.', '')
 
@@ -90,10 +87,9 @@ class Application(tk.Frame):
 
         fld_path = path.abspath(fld)
 
-        fld_resume = fld.replace(fld[3:len(fld) - int(len(fld)/2)], '...')
         print(path.dirname(path.abspath(fld)), 'print tche de teste', fld)
-        self.arq0atual_label = tk.Button(text=f"arquivo atual: {fld_resume}",
-                                         command=lambda: self.show_arq0(fld_path), bg='black', fg='white')
+        self.arq0atual_label = tk.Button(text=f"Start Recording",
+                                         command=lambda: self.show_arq0(fld_path), bg='#fda321', fg='white')
 
         self.arq0atual_label.pack()
         self.arq0atual = fld
@@ -101,28 +97,33 @@ class Application(tk.Frame):
         return self.arq0atual
 
     def show_arq0(self, to_file):
+        fld = to_file
+
         texto = self.arq0atual_label["text"]
-        if 'arquivo atual' in texto:
-            self.volta = texto
 
         try:
             open(to_file).close()
             subprocess.Popen(f'explorer /select,"{to_file}" ')
         except FileNotFoundError:
-            self.arq0atual_label["text"] = 'Start Recording'
-            self.arq0atual_label["bg"] = '#fda321'
-        finally:
-            if texto == 'Start Recording':
-                self.arq0atual_label['bg'] = 'red'
-                self.arq0atual_label["text"] = 'Stop Recording'
-                self.start(self.gravando)
-                # ##################################
-                # VOU ENVIAR AS CORDENADAS DO BOTÃO E QDO ELE FOR CLICADO, VAI ACABAR A THREAD
-                # ################################
-            elif texto == 'Stop Recording':
-                self.arq0atual_label["text"] = self.volta
-                self.arq0atual_label['bg'] = 'black'
-                self.stoprec()
+            pass
+        if texto == 'Start Recording':
+            self.arq0atual_label['bg'] = 'red'
+            self.arq0atual_label["text"] = 'Stop Recording'
+            self.start(self.gravando)
+            # ##################################
+            # VOU ENVIAR AS CORDENADAS DO BOTÃO E QDO ELE FOR CLICADO, VAI ACABAR A THREAD
+            # ################################
+        elif texto == 'Stop Recording':
+            fld_resume = fld.replace(fld[3:len(fld) - int(len(fld) / 2)], '...')
+            self.arq0atual_label["text"] = fld_resume
+            self.arq0atual_label['bg'] = 'black'
+            self.stoprec()
+
+    def forget_arq0(self):
+        try:
+            self.arq0atual_label.pack_forget()
+        except (AttributeError, NameError):
+            pass
 
     # QUANDO CLICAR NO BOTÃO
 
@@ -163,6 +164,7 @@ class Application(tk.Frame):
             messagebox.showinfo('FIM!!!', f'Arquivo {self.arq0atual} EXECUTADO COM SUCESSO. [enter] para continuar')
 
     def nova_gravacao(self):
+        self.forget_arq0()
         self.mk_fld(None)
 
 def execute():
