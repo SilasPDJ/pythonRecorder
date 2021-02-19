@@ -141,6 +141,11 @@ class MyMouseKeyboard:
                     time.sleep(tempo)
                     pygui.click(*move_to)
                     # self.mcontroller.press(el, *move_to)
+        print('FIM.....')
+
+    def stopit(self):
+        self.kcontroller.press(Key.pause)
+        self.kcontroller.release(Key.pause)
 
 
 class MyKeyboardV001:

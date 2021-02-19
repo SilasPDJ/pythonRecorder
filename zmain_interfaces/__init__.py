@@ -14,6 +14,8 @@ import subprocess
 
 class Application(tk.Frame):
 
+    stoprec_exe = False
+
     class MyButton(tk.Button):
         def __init__(self, *args, **kwargs):
             # tk.Button.__init__(self, *args, **kwargs)
@@ -39,7 +41,7 @@ class Application(tk.Frame):
         bt["command"] = lambda: self.start(self.gravando)
         bt.pack(side="top", anchor='w', fill=tk.X)
         """
-        
+
         bt = self.MyButton(fg='black', bg='yellow')
         bt["text"] = 'Gera Novo Arquivo'
         bt["command"] = lambda: self.start(self.nova_gravacao)
@@ -61,6 +63,10 @@ class Application(tk.Frame):
     # #######
 
     def mk_kboard_instance(self, select=False):
+        """
+        :param select: if True, select the file
+        :return: instance of MyMouseKeybaord
+        """
         try:
             narq = self.arq0atual
         except AttributeError:
@@ -95,20 +101,31 @@ class Application(tk.Frame):
         return self.arq0atual
 
     def show_arq0(self, to_file):
-
         texto = self.arq0atual_label["text"]
+        if 'arquivo atual' in texto:
+            self.volta = texto
+
         try:
             open(to_file).close()
             subprocess.Popen(f'explorer /select,"{to_file}" ')
         except FileNotFoundError:
-            # subprocess.Popen(f'explorer "{path.dirname(to_file)}"')
-            # self.arq0atual_label["text"] = self.arq0atual_label["text"].replace('arquivo', 'GRAVE')
-            self.arq0atual_label["text"] = 'GRAVAR PRIMEIRO'
+            self.arq0atual_label["text"] = 'Start Recording'
+            self.arq0atual_label["bg"] = '#fda321'
         finally:
-            if texto == 'GRAVAR PRIMEIRO':
+            if texto == 'Start Recording':
                 self.arq0atual_label['bg'] = 'red'
-                self.arq0atual_label["text"] = 'GRAVANDO'
-                self.gravando()
+                self.arq0atual_label["text"] = 'Stop Recording'
+                self.start(self.gravando)
+                # ##################################
+                # VOU ENVIAR AS CORDENADAS DO BOTÃO E QDO ELE FOR CLICADO, VAI ACABAR A THREAD
+                # ################################
+            elif texto == 'Stop Recording':
+                self.arq0atual_label["text"] = self.volta
+                self.arq0atual_label['bg'] = 'black'
+                self.stoprec()
+
+    # QUANDO CLICAR NO BOTÃO
+
     #  -------------------------------botões
     def dialog_open_arq(self):
         fld0 = filedialog.askopenfilename(defaultextension='txt', filetypes=(('text files', 'txt'), ), initialdir=path.dirname(__file__))
@@ -123,15 +140,27 @@ class Application(tk.Frame):
         fld = self.mk_fld(fld0)
         return fld
 
-    def gravando(self):
+    def gravando(self, parou=False):
         dale = self.mk_kboard_instance()
+        self.stoprec_exe = dale
         dale.listen()
         dale.backup()
 
+    def stoprec(self):
+        print(f'\033[1;31m STOP REC\033[m, {self.stoprec_exe}')
+        if self.stoprec_exe:
+            dale = self.stoprec_exe
+            self.stoprec_exe.stopit()
+
+
     def executa(self):
         dale = self.mk_kboard_instance(select=True)
-        dale.playitbackup()
-        messagebox.showinfo('FIM!!!', f'Arquivo {self.arq0atual} EXECUTADO COM SUCESSO. [enter] para continuar')
+        try:
+            dale.playitbackup()
+        except FileNotFoundError:
+            messagebox.showinfo('ERRO', 'Gere um novo arquivo primeiro!!!')
+        else:
+            messagebox.showinfo('FIM!!!', f'Arquivo {self.arq0atual} EXECUTADO COM SUCESSO. [enter] para continuar')
 
     def nova_gravacao(self):
         self.mk_fld(None)
