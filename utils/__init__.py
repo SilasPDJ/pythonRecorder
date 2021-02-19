@@ -23,9 +23,6 @@ class MyMouseKeyboard:
     # quando False, gera um novo contador time.time()
     # Lógica para detectar por quanto tempo uma tecla/click tá sendo pressionada/o
 
-    prossegue = True
-    # Detecta key.pause [se foi pressionada]
-
     def __init__(self, file=None):
         self.file = file if file is not None else self.file
         self.geral = []
@@ -53,8 +50,8 @@ class MyMouseKeyboard:
         if not self.keytimer:
             self.keystart = time.time()
             self.keytimer = True
-        if self.prossegue:
-            self.geral.append({"pressed": key})
+
+        self.geral.append({"pressed": key})
 
     def get_time_taken(self):
         end = time.time()
@@ -70,25 +67,12 @@ class MyMouseKeyboard:
 
     def on_release(self, key):
         pause_key = Key.pause
-        if key is pause_key and self.prossegue is False:
-            self.prossegue = True
-            print('Pode prosseguir')
-        else:
-            if key is pause_key:
-                self.prossegue = False
-                print('\033[1;31mPediu para parar, parou\033[m')
-            elif self.prossegue is False:
-                self.prossegue = False
-            else:
-                self.prossegue = True
+        appended = {"released": key, 'time_taken': self.get_time_taken()}
+        self.geral.append(appended)
+        print(appended['time_taken'])
 
-            if key == Key.f8:
-                return False
-        if self.prossegue:
-
-            appended = {"released": key, 'time_taken': self.get_time_taken()}
-            self.geral.append(appended)
-            print(appended['time_taken'])
+        if pause_key is key or pause_key == key:
+            return False
 
     def listen(self):
         with MouseListener(on_move=self.on_move, on_click=self.on_click, on_scroll=self.on_scroll) as listener:
@@ -100,9 +84,20 @@ class MyMouseKeyboard:
                 listener.stop()
 
     def backup(self):
-        with open(self.file, 'wb') as wf:
-            novo = self.geral.copy()
-            pickle.dump(novo, wf)
+
+        # Appending...
+        try:
+            with open(self.file, 'rb') as rf:
+                was = pickle.load(rf)
+            with open(self.file, 'wb') as wf:
+                novo = was
+                novo += self.geral.copy()
+                pickle.dump(novo, wf)
+
+        except FileNotFoundError:
+            with open(self.file, 'wb') as wf:
+                novo = self.geral.copy()
+                pickle.dump(novo, wf)
 
     def playit(self):
         for dict_key in self.geral:
@@ -127,6 +122,8 @@ class MyMouseKeyboard:
         with open(self.file, 'rb') as rf:
             rp = pickle.load(rf)
         for dict_key in rp:
+            print(dict_key)
+
             tipo, el = list(dict_key.items())[0]
             if tipo == 'released':
                 # tempo = list(dict_key.items())[1][1]
@@ -136,6 +133,7 @@ class MyMouseKeyboard:
             elif tipo == 'pressed':
                 self.kcontroller.press(el)
             elif tipo == 'clicked':
+                time.sleep(.25)
                 myclick, move_to, pressed, tempo = dict_key.values()
                 # print(myclick, move_to, pressed, tempo)
                 # self.mcontroller.move(*move_to)

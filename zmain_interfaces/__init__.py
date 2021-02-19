@@ -5,8 +5,12 @@ from utils import MyMouseKeyboard
 import time
 import threading
 from functools import partial
-
 import pyautogui as pygui
+
+import subprocess
+# subprocess.Popen is non-blocking
+# subprocess.call is blocking
+
 
 class Application(tk.Frame):
 
@@ -25,30 +29,26 @@ class Application(tk.Frame):
         self.master = master
 
         menubar = self.Widgets()
-        menubar.add_command(label='File')
-        menubar.add_command(label='quit', command=root.quit)
+        menubar.add_command(label='Load File', command=lambda: self.start(self.dialog_open_arq))
+        menubar.add_command(label='Save As File', command=lambda: self.start(self.dialog_save_arq))
+        menubar.add_command(label='quit', command=master.quit)
         master.config(menu=menubar)
-
-        bt = self.MyButton(fg='yellow', bg='blue')
-        bt["text"] = 'SALVAR COMO'
-        bt["command"] = lambda: self.start(self.dialog_select_arq)
-        bt.pack(side="left")
-
-        bt = self.MyButton(fg='red', bg='yellow')
-        bt["text"] = 'Selecione arquivo'
-        bt["command"] = lambda: self.start(self.dialog_select_arq)
-        bt.pack(side="top")
-
+        """
         bt = self.MyButton(fg='black', bg='red')
         bt["text"] = 'GRAVAR'
         bt["command"] = lambda: self.start(self.gravando)
-        bt.pack(side="top")
-        # self.create_widgets()
+        bt.pack(side="top", anchor='w', fill=tk.X)
+        """
+        
+        bt = self.MyButton(fg='black', bg='yellow')
+        bt["text"] = 'Gera Novo Arquivo'
+        bt["command"] = lambda: self.start(self.nova_gravacao)
+        bt.pack(side="top", anchor='w', fill=tk.X)
 
         bt = self.MyButton(fg='black', bg='green')
         bt["text"] = 'REPRODUZIR'
         bt["command"] = lambda: self.start(self.executa)
-        bt.pack(side="top")
+        bt.pack(side="top", anchor='w', fill=tk.X)
 
     # threads
     def refresh(self):
@@ -65,44 +65,62 @@ class Application(tk.Frame):
             narq = self.arq0atual
         except AttributeError:
             if select:
-                narq = self.dialog_select_arq()
+                narq = self.dialog_open_arq()
             else:
-                narq = self.criauto_arq()
-        print('narq: ')
+                narq = self.mk_fld()
+
         dale = MyMouseKeyboard(narq)
         return dale
 
-    def mk_fld(self, fld):
+    def mk_fld(self, fld=None):
         try:
             self.arq0atual_label.pack_forget()
         except (AttributeError, NameError):
             pass
-        if fld == '':
-            fld = self.criauto_arq()
+        if fld == '' or fld is None:
+            fld = str(time.time()).replace('.', '')
+
+        fld += f'.txt' if path.splitext(fld)[1] == '' else ''
+
+        fld_path = path.abspath(fld)
 
         fld_resume = fld.replace(fld[3:len(fld) - int(len(fld)/2)], '...')
-        self.arq0atual_label = tk.Label(text=f"arquivo atual: {fld_resume}")
+        print(path.dirname(path.abspath(fld)), 'print tche de teste', fld)
+        self.arq0atual_label = tk.Button(text=f"arquivo atual: {fld_resume}",
+                                         command=lambda: self.show_arq0(fld_path), bg='black', fg='white')
+
         self.arq0atual_label.pack()
         self.arq0atual = fld
 
-    def criauto_arq(self):
-        fld = str(time.time()).replace('.', '')
-        fld += '.txt'
-        return fld
+        return self.arq0atual
 
+    def show_arq0(self, to_file):
+
+        texto = self.arq0atual_label["text"]
+        try:
+            open(to_file).close()
+            subprocess.Popen(f'explorer /select,"{to_file}" ')
+        except FileNotFoundError:
+            # subprocess.Popen(f'explorer "{path.dirname(to_file)}"')
+            # self.arq0atual_label["text"] = self.arq0atual_label["text"].replace('arquivo', 'GRAVE')
+            self.arq0atual_label["text"] = 'GRAVAR PRIMEIRO'
+        finally:
+            if texto == 'GRAVAR PRIMEIRO':
+                self.arq0atual_label['bg'] = 'red'
+                self.arq0atual_label["text"] = 'GRAVANDO'
+                self.gravando()
     #  -------------------------------botões
-    def dialog_select_arq(self):
+    def dialog_open_arq(self):
         fld0 = filedialog.askopenfilename(defaultextension='txt', filetypes=(('text files', 'txt'), ), initialdir=path.dirname(__file__))
+        if fld0 == '':
+            return None
 
-        fld = f'{fld0}.txt' if path.splitext(fld0)[1] == '' else fld0
-        self.mk_fld(fld)
+        fld = self.mk_fld(fld0)
         return fld
 
     def dialog_save_arq(self):
         fld0 = filedialog.asksaveasfilename(title="Salve a gravação", filetypes=(('text files', 'txt'), ))
-
-        fld = f'{fld0}.txt' if path.splitext(fld0)[1] == '' else fld0
-        self.mk_fld(fld)
+        fld = self.mk_fld(fld0)
         return fld
 
     def gravando(self):
@@ -115,12 +133,16 @@ class Application(tk.Frame):
         dale.playitbackup()
         messagebox.showinfo('FIM!!!', f'Arquivo {self.arq0atual} EXECUTADO COM SUCESSO. [enter] para continuar')
 
-root = tk.Tk()
-root.resizable(True, True)
-rx, ry = pygui.getActiveWindow().center
-root.geometry(f'250x100+{rx}+{ry}')
+    def nova_gravacao(self):
+        self.mk_fld(None)
 
-root.wm_iconposition(rx, ry)
-app = Application(root)
+def execute():
+    root = tk.Tk()
+    root.resizable(True, True)
+    rx, ry = pygui.getActiveWindow().center
+    root.geometry(f'250x100+{rx}+{ry}')
 
-app.mainloop()
+    root.wm_iconposition(rx, ry)
+    app = Application(root)
+
+    app.mainloop()
