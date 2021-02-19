@@ -47,10 +47,10 @@ class Application(tk.Frame):
         bt["command"] = lambda: self.start(self.nova_gravacao)
         bt.pack(side="top", anchor='w', fill=tk.X)
 
-        bt = self.MyButton(fg='black', bg='green')
-        bt["text"] = 'REPRODUZIR'
-        bt["command"] = lambda: self.start(self.executa)
-        bt.pack(side="top", anchor='w', fill=tk.X)
+        btrp = self.MyButton(fg='black', bg='green')
+        btrp["text"] = 'REPRODUZIR'
+        btrp["command"] = lambda: self.start(self.executa)
+        btrp.pack(side="top", anchor='w', fill=tk.X)
 
     # threads
     def refresh(self):

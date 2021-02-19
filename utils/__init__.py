@@ -67,12 +67,18 @@ class MyMouseKeyboard:
 
     def on_release(self, key):
         pause_key = Key.pause
+        if pause_key is key or pause_key == key:
+            self.geral.pop()
+            self.geral.pop()
+            return False
+
         appended = {"released": key, 'time_taken': self.get_time_taken()}
         self.geral.append(appended)
+
+
         print(appended['time_taken'])
 
-        if pause_key is key or pause_key == key:
-            return False
+
 
     def listen(self):
         with MouseListener(on_move=self.on_move, on_click=self.on_click, on_scroll=self.on_scroll) as listener:
