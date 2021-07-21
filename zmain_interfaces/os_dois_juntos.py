@@ -6,6 +6,12 @@ import pickle
 from pynput.keyboard import Listener as KeyboardListener
 from pynput.mouse import Listener as MouseListener
 import pyautogui as pygui
+from time import sleep
+from win10toast import ToastNotifier
+
+
+
+
 
 
 class MyMouseKeyboard:
@@ -118,7 +124,46 @@ class MyMouseKeyboard:
                     pygui.click(*move_to)
                     # self.mcontroller.press(el, *move_to)
 
+    @staticmethod
+    def press_keys_b4(*keys: str):
+        from keyboard import is_pressed
+        """
+        :param keys: any key you wish
+        :return:
+        """
+        while True:
+            for key in keys:
+                if is_pressed(key):
+                    if is_pressed(key):
+                        return key
+                else:
+                    pass
+                    # print(key)
 
+
+toaster = ToastNotifier()
+toaster.show_toast("Pressione F8 para iniciar, depois parar e executar",
+"Python is 10 seconds awsm!",
+# icon_path="custom.ico",
+duration=10)
+
+print('\033[1;31m Pressione F8 para parar e executar')
+sleep(2)
 a = MyMouseKeyboard()
+a.press_keys_b4('f8')
 a.listen()
-a.playit()
+
+continua = False
+while True:
+    if a.press_keys_b4('f8', 'f12') == 'f12':
+        break
+    a.playit()
+
+    if continua is False:
+        toaster.show_toast("Pressione F2 para finalizar o programa. F12 para parar de reproduzir",
+                           "Euzinho :)!",
+                           # icon_path="custom.ico",
+                           duration=10)
+
+    continua = True
+    sleep(2.5)

@@ -14,9 +14,15 @@ class Application(tk.Frame):
         def __init__(self, *args, **kwargs):
             tk.Button.__init__(self, *args, **kwargs)
 
+    class MyLabel(tk.Label):
+        def __init__(self, *args, **kwargs):
+            tk.Label.__init__(self, *args, **kwargs)
+
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
+        self.master.geometry('200x200')
+
         bt = self.MyButton(fg='red', bg='yellow')
         bt["text"] = 'Selecione arquivo'
         bt["command"] = lambda: self.start(self.selec_arq)
@@ -32,6 +38,11 @@ class Application(tk.Frame):
         bt["text"] = 'REPRODUZIR'
         bt["command"] = lambda: self.start(self.executa)
         bt.pack(side="top")
+
+        entr = self.MyLabel()
+        entr['text'] = "Pressione F8 para parar a gravação e salvar o arquivo"
+        entr.pack()
+
         # self.create_widgets()
 
     # threads
@@ -82,6 +93,7 @@ class Application(tk.Frame):
         return dale
 
     def gravando(self):
+        print('Gravando')
         dale = self.mk_kboard_instance()
         dale.listen()
         dale.backup()
@@ -94,6 +106,7 @@ class Application(tk.Frame):
 
 root = tk.Tk()
 app = Application(master=root)
+# dale = tk.Label(root, text="testedsadasdasdasdadasddsadas").pack()
 # app.MyButton(text="Testo").pack()
 
 app.mainloop()
