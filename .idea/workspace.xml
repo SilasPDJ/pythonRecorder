@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a00d6ffd-b5d3-4da9-b4a1-e05a1f47802c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OS_DOIS_JUNTOS_FINAL.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/first_interfaces/main_keyboard_recorder_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/first_interfaces/main_keyboard_recorder_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos.py" beforeDir="false" afterPath="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

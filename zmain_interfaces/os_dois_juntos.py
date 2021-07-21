@@ -8,10 +8,7 @@ from pynput.mouse import Listener as MouseListener
 import pyautogui as pygui
 from time import sleep
 from win10toast import ToastNotifier
-
-
-
-
+import tkinter as tk
 
 
 class MyMouseKeyboard:
@@ -141,29 +138,22 @@ class MyMouseKeyboard:
                     # print(key)
 
 
+times = 10
+# Fazer o GUI do times
+
+
 toaster = ToastNotifier()
 toaster.show_toast("Pressione F8 para iniciar, depois parar e executar",
 "Python is 10 seconds awsm!",
 # icon_path="custom.ico",
-duration=10)
+duration=2)
 
-print('\033[1;31m Pressione F8 para parar e executar')
-sleep(2)
 a = MyMouseKeyboard()
-a.press_keys_b4('f8')
+
 a.listen()
-
-continua = False
-while True:
-    if a.press_keys_b4('f8', 'f12') == 'f12':
-        break
+# l = a.press_keys_b4('f8')
+# print(l)
+for i in range(times):
     a.playit()
+    sleep(3)
 
-    if continua is False:
-        toaster.show_toast("Pressione F2 para finalizar o programa. F12 para parar de reproduzir",
-                           "Euzinho :)!",
-                           # icon_path="custom.ico",
-                           duration=10)
-
-    continua = True
-    sleep(2.5)
