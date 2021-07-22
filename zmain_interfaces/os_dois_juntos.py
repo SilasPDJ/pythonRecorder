@@ -35,10 +35,11 @@ class MyMouseKeyboard:
         pass
     # ---------------- MOUSE PART
 
-    def on_move(self, x, y):
+    def on_move(self, x, y, *args):
         if not self.mousetimer:
             self.mousestart = time.time()
             self.mousetimer = True
+            # not more necessary than that
 
     def on_click(self, x, y, button, pressed):
         print(f'clicking: x:{x}, y:{y}; {button}; {pressed}')
@@ -116,10 +117,16 @@ class MyMouseKeyboard:
                 myclick, move_to, pressed, tempo = dict_key.values()
                 # print(myclick, move_to, pressed, tempo)
                 # self.mcontroller.move(*move_to)
-                if pressed is True:
-                    time.sleep(tempo)
-                    pygui.click(*move_to)
-                    # self.mcontroller.press(el, *move_to)
+
+                if pressed:
+                    pygui.click(*move_to, clicks=0, duration=tempo)
+                    self.mcontroller.press(myclick)
+                    # self.mcontroller.click(myclick)
+                else:
+                    pygui.click(*move_to, clicks=0, duration=tempo)
+                    self.mcontroller.release(myclick)
+            else:
+                pass
 
     @staticmethod
     def press_keys_b4(*keys: str):
@@ -138,7 +145,8 @@ class MyMouseKeyboard:
                     # print(key)
 
 
-times = 10
+times = 100
+tosleep = 4
 # Fazer o GUI do times
 
 
@@ -155,5 +163,5 @@ a.listen()
 # print(l)
 for i in range(times):
     a.playit()
-    sleep(3)
+    sleep(tosleep)
 
