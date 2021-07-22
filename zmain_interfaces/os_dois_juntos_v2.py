@@ -126,7 +126,7 @@ class MyMouseKeyboard:
                     self.mcontroller.press(myclick)
                     # self.mcontroller.click(myclick)
                 else:
-                    pygui.click(*move_to, clicks=0, duration=0)
+                    pygui.click(*move_to, clicks=0, duration=1)
                     self.mcontroller.release(myclick)
             else:
                 pass

@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a00d6ffd-b5d3-4da9-b4a1-e05a1f47802c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos.py" beforeDir="false" afterPath="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,18 +40,19 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/zmain_interfaces" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\MY_PROJECTS\pythonRecorder\zmain_interfaces" />
       <recent name="H:\MY_PROJECTS\pythonRecorder" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\MY_PROJECTS\pythonRecorder\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.os_dois_juntos (1)">
+  <component name="RunManager" selected="Python.os_dois_juntos_v2">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonRecorder" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -134,7 +137,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="os_dois_juntos" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="os_dois_juntos_v2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonRecorder" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -142,11 +145,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/zmain_interfaces" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="H:\MY_PROJECTS\pythonRecorder\main\os_dois_juntos.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zmain_interfaces/os_dois_juntos_v2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -178,11 +181,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.os_dois_juntos_v2" />
         <item itemvalue="Python.os_dois_juntos (1)" />
         <item itemvalue="Python.main_keyboard_recorder_v2 (1)" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.__init__" />
-        <item itemvalue="Python.os_dois_juntos" />
       </list>
     </recent_temporary>
   </component>
