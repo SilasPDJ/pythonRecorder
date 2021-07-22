@@ -6,7 +6,6 @@ import pickle
 from pynput.keyboard import Listener as KeyboardListener
 from pynput.mouse import Listener as MouseListener
 import pyautogui as pygui
-from time import sleep
 from win10toast import ToastNotifier
 import tkinter as tk
 
@@ -120,10 +119,11 @@ class MyMouseKeyboard:
 
                 if pressed:
                     pygui.click(*move_to, clicks=0, duration=tempo)
+                    # time.sleep(2)
                     self.mcontroller.press(myclick)
                     # self.mcontroller.click(myclick)
                 else:
-                    pygui.click(*move_to, clicks=0, duration=tempo)
+                    pygui.click(*move_to, clicks=0, duration=0)
                     self.mcontroller.release(myclick)
             else:
                 pass
@@ -163,5 +163,5 @@ a.listen()
 # print(l)
 for i in range(times):
     a.playit()
-    sleep(tosleep)
+    time.sleep(tosleep)
 
