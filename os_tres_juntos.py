@@ -3,7 +3,7 @@ from tkinter import Button
 from functools import partial, partialmethod
 from utils import MyMouseKeyboard
 import pyautogui as pygui
-
+import pickle
 import tkinter as tk
 import threading
 
@@ -17,14 +17,15 @@ class Backend:
     def __init__(self):
 
         main = partial(MyMouseKeyboard)
-        self.main = main()
+        self.mmk = main()
 
-        self.record = partial(self.main.listen)
-        self.exec = partial(self.main.playit)
+        self.record = partial(self.mmk.listen)
+        self.exec = partial(self.mmk.playit)
 
 
 class MainApplication(Backend, AppInit):
     myprint = partial(print, 'teste partial ')
+    can_reset = True
 
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
@@ -38,21 +39,21 @@ class MainApplication(Backend, AppInit):
         self.root = parent
 
         bt_gravar = self.button('Gravar')
-        bt_exec = self.button('Executar')
+        bt_exec = self.button('Finalizar e Executar')
+        bt_pause = self.button('PAUSE', command=lambda bg=bt_gravar: (self.pause4while(), self.change_state(bg, bt_pause)))
 
+        bt_pause['state'] = 'disabled'
         bt_gravar.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_record(bg), self.change_state(bg),
-                                                                      self.change_state(be) if be['state'] == 'disabled' else None))
-
-        # eu só to redeclarando o lb, nada de mais
-
-        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(bg, be)))
-
-        bt_parar = self.button('Parar', command=lambda: pygui.hotkey('f8'))
-        bt_parar['state'] = 'disabled'
+                                                                      self.change_state(be) if be['state'] == 'disabled' else None,
+                                                                      self.change_state(bt_pause)))
+        # eu só to redeclarando o bt_execute, etc
+        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(bg, be, bt_pause)))
 
         self.__pack(bt_gravar)
         self.__pack(bt_exec)
-        self.__pack(bt_parar)
+        self.__pack(bt_pause)
+
+        self.menubar()
 
     # Elements and placements
     @staticmethod
@@ -63,6 +64,18 @@ class MainApplication(Backend, AppInit):
         bt = Button(self, text=text, command=lambda: self.start(command), fg=fg, bg=bg)
         return bt
     # Elements and placements
+
+    def menubar(self):
+        menubar = tk.Menu(self.parent)
+
+        filemenu = tk.Menu(menubar)
+        filemenu.add_command(label="Open", command=lambda: print('open'))
+        filemenu.add_command(label="Save", command=lambda: print('save'))
+        filemenu.add_command(label="Exit", command=lambda: print('exit'))
+
+        menubar.add_cascade(label="File", menu=filemenu)
+
+        self.parent.config(menu=menubar)
 
     @staticmethod
     def change_state(*args):
@@ -80,18 +93,26 @@ class MainApplication(Backend, AppInit):
                 bt['state'] = 'normal'
 
     def main_record(self, caller_bt):
+        if self.can_reset:
 
-        Backend.__init__(self)
-        self.main.reset_geral()
+            Backend.__init__(self)
+            self.mmk.reset_geral()
 
         caller_bt['bg'] = 'red'
         self.start(self.record)
 
     def main_exec(self, caller_bt):
         pygui.hotkey('f8')
+        self.start(self.mmk.backup_save())
         # para habilitar novamente a gravação
+
         caller_bt['bg'] = 'red'
         self.start(self.exec)
+
+    def pause4while(self):
+        pygui.hotkey('f8')
+
+        self.can_reset = False
 
     # threading...
     def refresh(self):

@@ -1,8 +1,11 @@
+import json
+
 from pynput.keyboard import Controller as KeyboardController, Key
 from pynput.mouse import Controller as MouseController
 import pynput
 import time
 import pickle
+import jsonpickle
 from pynput.keyboard import Listener as KeyboardListener
 from pynput.mouse import Listener as MouseListener
 import pyautogui as pygui
@@ -131,6 +134,17 @@ class MyMouseKeyboard:
 
     def reset_geral(self):
         self.geral.clear()
+
+    def backup_save(self, list_backup=None):
+        if list_backup is None:
+            list_backup = self.geral
+        novo = list_backup.copy()
+        todump = jsonpickle.encode(novo)
+        with open('save_it.txt', 'w') as wf:
+            json.dump(todump, wf)
+
+
+
 
     @staticmethod
     def press_keys_b4(*keys: str):
