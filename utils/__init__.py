@@ -135,12 +135,12 @@ class MyMouseKeyboard:
     def reset_geral(self):
         self.geral.clear()
 
-    def backup_save(self, list_backup=None):
+    def backup_save(self, file_saved, list_backup=None):
         if list_backup is None:
             list_backup = self.geral
         novo = list_backup.copy()
         todump = jsonpickle.encode(novo)
-        with open('save_it.txt', 'w') as wf:
+        with open(file_saved, 'w') as wf:
             json.dump(todump, wf)
 
 

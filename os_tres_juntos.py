@@ -6,6 +6,7 @@ import pyautogui as pygui
 import pickle
 import tkinter as tk
 import threading
+from tkinter import filedialog, messagebox
 
 
 class AppInit(tk.Frame):
@@ -14,6 +15,9 @@ class AppInit(tk.Frame):
 
 
 class Backend:
+
+    file2save = 'custom.json'
+
     def __init__(self):
 
         main = partial(MyMouseKeyboard)
@@ -21,6 +25,26 @@ class Backend:
 
         self.record = partial(self.mmk.listen)
         self.exec = partial(self.mmk.playit)
+        # dialogs
+
+    def save_as(self):
+        # if messagebox.askyesno('ATENÇÃO!!!', message='Deseja concluir a gravação?'):
+        can_bsaved = True
+        if not self.mmk.geral:
+            can_bsaved = not messagebox.askyesno('ATENÇÃO!!!', message='Vamos gravar primeiro?')
+
+        if can_bsaved:
+            fl = filedialog.asksaveasfilename(title="Salve a gravação", defaultextension=('.json',))
+            self.file2save = fl
+
+            self.mmk.backup_save(self.file2save)
+
+
+
+
+
+    def open_file(self):
+        pass
 
 
 class MainApplication(Backend, AppInit):
@@ -72,9 +96,9 @@ class MainApplication(Backend, AppInit):
 
         filemenu = tk.Menu(menubar, tearoff=0)
         # filemenu.add_command(label="New", command=donothing)
-        filemenu.add_command(label="Open", command=donothing)
+        filemenu.add_command(label="Open", command=self.open_file)
         filemenu.add_command(label="Save", command=donothing)
-        filemenu.add_command(label="Save as...", command=donothing)
+        filemenu.add_command(label="Save as...", command=self.save_as)
         filemenu.add_command(label="Close", command=donothing)
 
         filemenu.add_separator()
@@ -126,8 +150,10 @@ class MainApplication(Backend, AppInit):
 
     def main_exec(self, caller_bt):
         pygui.hotkey('f8')
-        self.start(self.mmk.backup_save())
+        self.save_as()
+        time.sleep(1)
         # para habilitar novamente a gravação
+        # self.mmk.backup_save(self.file2save)
 
         caller_bt['bg'] = 'red'
         self.start(self.exec)
@@ -146,6 +172,7 @@ class MainApplication(Backend, AppInit):
         self.refresh()
         threading.Thread(target=stuff).start()
     # threading
+
 
 if __name__ == "__main__":
     root = tk.Tk()
