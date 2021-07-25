@@ -40,11 +40,12 @@ class MainApplication(Backend, AppInit):
         bt_gravar = self.button('Gravar')
         bt_exec = self.button('Executar')
 
-        bt_gravar.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_record(bg, be), self.change_state(bg)))
+        bt_gravar.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_record(bg), self.change_state(bg),
+                                                                      self.change_state(be) if be['state'] == 'disabled' else None))
 
         # eu só to redeclarando o lb, nada de mais
 
-        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(bg)))
+        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(bg, be)))
 
         bt_parar = self.button('Parar', command=lambda: pygui.hotkey('f8'))
         bt_parar['state'] = 'disabled'
@@ -78,17 +79,13 @@ class MainApplication(Backend, AppInit):
             else:
                 bt['state'] = 'normal'
 
-    def main_record(self, caller_bt, be_check):
+    def main_record(self, caller_bt):
 
         Backend.__init__(self)
         self.main.reset_geral()
 
         caller_bt['bg'] = 'red'
         self.start(self.record)
-        if caller_bt['state'] == 'normal':
-            be_check['state'] = 'normal'
-        else:
-            print(caller_bt['state'])
 
     def main_exec(self, caller_bt):
         pygui.hotkey('f8')
