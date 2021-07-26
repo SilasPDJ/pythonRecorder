@@ -39,12 +39,19 @@ class Backend:
 
             self.mmk.backup_save(self.file2save)
 
-
-
-
-
     def open_file(self):
-        pass
+        filetypes = (
+            ('json files', '*.json'),
+            ('All files', '*.*')
+        )
+        # show the open file dialog
+        got_br = self.mmk.backup_restore(filedialog.askopenfilename(filetypes=filetypes))
+        # askfilename get only name, askfile full object
+
+        if got_br:
+            can_bupdated = not messagebox.askyesno('ATENÇÃO!!!', message='self.geral já existia, vou atualizar, ok?')
+            if can_bupdated:
+                self.mmk.geral = got_br
 
 
 class MainApplication(Backend, AppInit):

@@ -143,8 +143,16 @@ class MyMouseKeyboard:
         with open(file_saved, 'w') as wf:
             json.dump(todump, wf)
 
+    def backup_restore(self, file):
+        with open(file, 'r') as f:
+            got = jsonpickle.decode(f.read())
+            got = json.loads(got)
+            print(got)
 
-
+            if not self.geral:
+                self.geral = got
+            else:
+                return got
 
     @staticmethod
     def press_keys_b4(*keys: str):
