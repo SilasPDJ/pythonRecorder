@@ -15,6 +15,8 @@ class AppInit(tk.Frame):
 
 
 class Backend:
+    need2save = True
+    can_reset = True
 
     file2save = 'custom.json'
 
@@ -34,14 +36,14 @@ class Backend:
             can_bsaved = not messagebox.askyesno('ATENÇÃO!!!', message='Vamos gravar primeiro?')
 
         if can_bsaved:
-            fl = filedialog.asksaveasfilename(title="Salve a gravação", defaultextension=('.json',))
+            fl = filedialog.asksaveasfilename(title="Salve a gravação", defaultextension=('.txt',))
             self.file2save = fl
 
             self.mmk.backup_save(self.file2save)
 
     def open_file(self):
         filetypes = (
-            ('json files', '*.json'),
+            ('txt files', '*.txt'),
             ('All files', '*.*')
         )
         # show the open file dialog
@@ -52,11 +54,9 @@ class Backend:
             can_bupdated = not messagebox.askyesno('ATENÇÃO!!!', message='self.geral já existia, vou atualizar, ok?')
             if can_bupdated:
                 self.mmk.geral = got_br
-
+        self.need2save = False
 
 class MainApplication(Backend, AppInit):
-    myprint = partial(print, 'teste partial ')
-    can_reset = True
 
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
@@ -71,14 +71,14 @@ class MainApplication(Backend, AppInit):
 
         bt_gravar = self.button('Gravar')
         bt_exec = self.button('Finalizar e Executar')
-        bt_pause = self.button('PAUSE', command=lambda bg=bt_gravar: (self.pause4while(), self.change_state(bg, bt_pause)))
+        bt_pause = self.button('PAUSE', command=lambda bg=bt_gravar: (self.pause4while(), ))
 
         bt_pause['state'] = 'disabled'
         bt_gravar.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_record(bg), self.change_state(bg),
                                                                       self.change_state(be) if be['state'] == 'disabled' else None,
                                                                       self.change_state(bt_pause)))
         # eu só to redeclarando o bt_execute, etc
-        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(bg, be, bt_pause)))
+        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(be, bt_pause)))
 
         self.__pack(bt_gravar)
         self.__pack(bt_exec)
@@ -153,11 +153,13 @@ class MainApplication(Backend, AppInit):
             self.mmk.reset_geral()
 
         caller_bt['bg'] = 'red'
+        self. need2save = True
         self.start(self.record)
 
     def main_exec(self, caller_bt):
         pygui.hotkey('f8')
-        self.save_as()
+        if self.need2save:
+            self.save_as()
         time.sleep(1)
         # para habilitar novamente a gravação
         # self.mmk.backup_save(self.file2save)

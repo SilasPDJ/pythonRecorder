@@ -14,7 +14,6 @@ import tkinter as tk
 
 
 class MyMouseKeyboard:
-    file = 'testsave.txt'
 
     kcontroller = KeyboardController()
     mcontroller = MouseController()
@@ -30,8 +29,7 @@ class MyMouseKeyboard:
     prossegue = True
     # Detecta key.pause [se foi pressionada]
 
-    def __init__(self, file=None):
-        self.file = file if file is not None else self.file
+    def __init__(self):
         self.geral = []
         pass
     # ---------------- MOUSE PART
@@ -139,15 +137,14 @@ class MyMouseKeyboard:
         if list_backup is None:
             list_backup = self.geral
         novo = list_backup.copy()
-        todump = jsonpickle.encode(novo)
-        with open(file_saved, 'w') as wf:
-            json.dump(todump, wf)
+
+        with open(file_saved, 'wb') as wf:
+            pickle.dump(novo, wf)
 
     def backup_restore(self, file):
         with open(file, 'r') as f:
-            got = jsonpickle.decode(f.read())
-            got = json.loads(got)
-            print(got)
+            with open(file, 'rb') as rf:
+                got = pickle.load(rf)
 
             if not self.geral:
                 self.geral = got
