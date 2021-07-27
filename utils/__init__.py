@@ -144,12 +144,8 @@ class MyMouseKeyboard:
     def backup_restore(self, file):
         with open(file, 'r') as f:
             with open(file, 'rb') as rf:
-                got = pickle.load(rf)
+                self.geral = pickle.load(rf)
 
-            if not self.geral:
-                self.geral = got
-            else:
-                return got
 
     @staticmethod
     def press_keys_b4(*keys: str):

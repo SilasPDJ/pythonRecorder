@@ -41,20 +41,45 @@ class Backend:
 
             self.mmk.backup_save(self.file2save)
 
-    def open_file(self):
+    def open_file(self, bt_exec):
         filetypes = (
             ('txt files', '*.txt'),
             ('All files', '*.*')
         )
         # show the open file dialog
-        got_br = self.mmk.backup_restore(filedialog.askopenfilename(filetypes=filetypes))
+        self.mmk.backup_restore(filedialog.askopenfilename(filetypes=filetypes))
         # askfilename get only name, askfile full object
 
-        if got_br:
-            can_bupdated = not messagebox.askyesno('ATENÇÃO!!!', message='self.geral já existia, vou atualizar, ok?')
-            if can_bupdated:
-                self.mmk.geral = got_br
+        self.can_reset = True
         self.need2save = False
+        bt_exec['state'] = 'normal'
+
+
+    @staticmethod
+    def change_state(*args, change_to=None):
+        """
+        :param args: elements [buttons]
+        :param change_to: Change state to [normal, disabled, ...], if None changes to opposite, 0 -> disabled, 1 -> normal
+        :return:
+        """
+        for bt in args:
+            bt_state = bt['state']
+            if change_to is None:
+                if bt_state == 'normal':
+                    bt['state'] = 'disabled'
+                else:
+                    bt['state'] = 'normal'
+            else:
+                if str(change_to).lower().strip() == 'disabled' or str(change_to).lower().strip() == 'normal':
+                    pass
+                elif not isinstance(change_to, int):
+                    print(f'{bt} em estado NORMLA')
+                    change_to = 'normal'
+                else:
+                    change_to = 'disabled' if change_to == 0 else 'normal'
+
+                bt['state'] = change_to
+
 
 class MainApplication(Backend, AppInit):
 
@@ -70,15 +95,18 @@ class MainApplication(Backend, AppInit):
         self.root = parent
 
         bt_gravar = self.button('Gravar')
-        bt_exec = self.button('Finalizar e Executar')
-        bt_pause = self.button('PAUSE', command=lambda bg=bt_gravar: (self.pause4while(), ))
+        self.bt_exec = bt_exec = self.button('Finalizar e Executar')
+        bt_pause = self.button('PAUSE', command=lambda bg=bt_gravar: (self.pause4while(), self.change_state(bg, change_to=1)))
 
         bt_pause['state'] = 'disabled'
-        bt_gravar.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_record(bg), self.change_state(bg),
-                                                                      self.change_state(be) if be['state'] == 'disabled' else None,
-                                                                      self.change_state(bt_pause)))
+        bt_gravar.configure(command=lambda be=bt_exec, bg=bt_gravar: (
+            self.main_record(bg), self.change_state(bg, change_to='disabled'), self.change_state(be, bt_pause, change_to=1),
+            self.change_state(bt_pause, change_to=1)))
+
         # eu só to redeclarando o bt_execute, etc
-        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(be, bt_pause)))
+        bt_exec.configure(command=lambda be=bt_exec, bg=bt_gravar: (self.main_exec(be), self.change_state(be, bt_pause, change_to=0),
+                                                                    self.change_state(bg, change_to=1)))
+        self.change_state(bt_exec)
 
         self.__pack(bt_gravar)
         self.__pack(bt_exec)
@@ -103,7 +131,7 @@ class MainApplication(Backend, AppInit):
 
         filemenu = tk.Menu(menubar, tearoff=0)
         # filemenu.add_command(label="New", command=donothing)
-        filemenu.add_command(label="Open", command=self.open_file)
+        filemenu.add_command(label="Open", command=lambda: self.open_file(self.bt_exec))
         filemenu.add_command(label="Save", command=donothing)
         filemenu.add_command(label="Save as...", command=self.save_as)
         filemenu.add_command(label="Close", command=donothing)
@@ -130,21 +158,6 @@ class MainApplication(Backend, AppInit):
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         self.parent.config(menu=menubar)
-
-    @staticmethod
-    def change_state(*args):
-        """
-        :param args: elements [buttons]
-        :return:
-        """
-        for bt in args:
-
-            bt_state = bt['state']
-
-            if bt_state == 'normal':
-                bt['state'] = 'disabled'
-            else:
-                bt['state'] = 'normal'
 
     def main_record(self, caller_bt):
         if self.can_reset:
