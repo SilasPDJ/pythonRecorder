@@ -112,7 +112,7 @@ class MyMouseKeyboard:
                 self.kcontroller.release(el)
             elif tipo == 'pressed':
                 # tempo = dict_key['time_taken']
-                # time.sleep(tempo)
+                time.sleep(0.1)
                 self.kcontroller.press(el)
             elif tipo == 'clicked':
                 myclick, move_to, pressed, tempo = dict_key.values()
