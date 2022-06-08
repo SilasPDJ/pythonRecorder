@@ -6,7 +6,8 @@ pdfs = ['Requerimento.pdf', 'CNH.pdf', 'ArquivosJuntos.pdf']
 merger = PdfFileMerger()
 
 
-pdfs = [f'C:\\OESK_CONTABIL\\Natan\\Outra empresa Rodrigo\\ABERTURA DE EMPRESA EM SUZANO\\MEI\\inverti o cnae\\{pdf}' for pdf in pdfs]
+pdfs = [
+    f'C:\\OESK_CONTABIL\\Natan\\Outra empresa Rodrigo\\ABERTURA DE EMPRESA EM SUZANO\\MEI\\inverti o cnae\\{pdf}' for pdf in pdfs]
 
 
 for pdf in pdfs:
