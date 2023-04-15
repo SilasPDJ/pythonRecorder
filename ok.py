@@ -24,6 +24,7 @@ def on_press(key):
     if key == keyboard.Key.f8:
         print('Stopping listeners...')
         stop_listening = True
+        return False
 
 # Define the on_release function for the keyboard listener
 
